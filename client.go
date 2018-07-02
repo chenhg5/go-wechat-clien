@@ -16,8 +16,9 @@ var client = &Client{
 	"", "",
 }
 
-func InitClient(addr string)  {
+func InitClient(addr string, acid string)  {
 	(*client).server_addr = addr
+	(*client).acid = acid
 }
 
 func SetAddr(addr string) *Client {
@@ -35,6 +36,16 @@ func (client *Client) WxappOauth(code string) (map[string]interface{}, error) {
 		"accountId" : (*client).acid,
 		"method" : "WxappOauth",
 		"jsCode" : code,
+	}))
+}
+
+func (client *Client) DecodeWxappData(code string) (map[string]interface{}, error) {
+	return GetData(post((*client).server_addr, map[string]string{
+		"accountId" : (*client).acid,
+		"method" : "DecodeWxappData",
+		"sessionKey" : "",
+		"iv" : "",
+		"encryptedData" : "",
 	}))
 }
 
