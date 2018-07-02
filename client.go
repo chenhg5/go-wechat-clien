@@ -22,8 +22,9 @@ func SetAddr(addr string) *Client {
 	return client
 }
 
-func SetAcid(acid string)  {
+func SetAcid(acid string) *Client {
 	(*client).acid = acid
+	return client
 }
 
 func (client *Client) WxappOauth(code string) (map[string]interface{}, error) {
