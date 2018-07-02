@@ -40,13 +40,19 @@ func (client *Client) WxappOauth(code string) (map[string]interface{}, error) {
 }
 
 func (client *Client) DecodeWxappData(code string) (map[string]interface{}, error) {
-	return GetData(post((*client).server_addr, map[string]string{
+	data, err := post((*client).server_addr, map[string]string{
 		"accountId" : (*client).acid,
 		"method" : "DecodeWxappData",
 		"sessionKey" : "",
 		"iv" : "",
 		"encryptedData" : "",
-	}))
+	})
+
+	if data["code"].(float64) != 200 {
+		return map[string]interface{}{}, errors.New(data["msg"].(string))
+	}
+
+	return data["data"].(map[string]interface{}), err
 }
 
 func GetData(olddata map[string]interface{}, err error) (map[string]interface{}, error) {
