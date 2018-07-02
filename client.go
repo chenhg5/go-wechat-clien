@@ -2,7 +2,6 @@ package client
 
 import (
 	"github.com/json-iterator/go"
-	"fmt"
 )
 
 var json = jsoniter.ConfigCompatibleWithStandardLibrary
