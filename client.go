@@ -2,6 +2,7 @@ package client
 
 import (
 	"github.com/json-iterator/go"
+	"fmt"
 )
 
 var json = jsoniter.ConfigCompatibleWithStandardLibrary
@@ -30,6 +31,7 @@ func (client *Client) SetAcid(acid string) *Client {
 }
 
 func (client *Client) WxappOauth(code string) (map[string]interface{}, error) {
+	fmt.Println((*client).acid)
 	return post((*client).server_addr, map[string]string{
 		"accountId" : (*client).acid,
 		"method" : "WxappOauth",

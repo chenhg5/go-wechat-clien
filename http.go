@@ -4,6 +4,7 @@ import (
 	"strings"
 	"net/http"
 	"io/ioutil"
+	"fmt"
 )
 
 func post(url string, data map[string]string) (map[string]interface{}, error) {
@@ -32,8 +33,10 @@ func post(url string, data map[string]string) (map[string]interface{}, error) {
 func makeFormData(data map[string]string, boundary string) string {
 	var formStr = ""
 	for k,v := range data {
-		formStr += "--" + boundary + `\r\nContent-Disposition: form-data; name="` + k + `"\r\n\r\n` + v + "\r\n"
+		formStr += "--" + boundary + "\r\n" +`Content-Disposition: form-data; name="` + k + `"` + "\r\n\r\n" + v + "\r\n"
 	}
-	formStr += "--boundaryhere--"
+	formStr += "--" + boundary + "--"
+
+	fmt.Println(formStr)
 	return formStr
 }
