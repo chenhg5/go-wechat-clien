@@ -12,18 +12,18 @@ type Client struct {
 	acid        string
 }
 
-var client = &Client{
+var WxClient = &Client{
 	"", "",
 }
 
 func InitClient(addr string, acid string)  {
-	(*client).server_addr = addr
-	(*client).acid = acid
+	(*WxClient).server_addr = addr
+	(*WxClient).acid = acid
 }
 
 func SetAddr(addr string) *Client {
-	(*client).server_addr = addr
-	return client
+	(*WxClient).server_addr = addr
+	return WxClient
 }
 
 func (client *Client) SetAcid(acid string) *Client {
