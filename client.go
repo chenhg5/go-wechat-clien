@@ -8,6 +8,7 @@ var json = jsoniter.ConfigCompatibleWithStandardLibrary
 
 type Client struct {
 	server_addr string
+	acid        string
 }
 
 var client *Client
@@ -21,9 +22,13 @@ func SetAddr(addr string) *Client {
 	return client
 }
 
+func SetAcid(acid string)  {
+	(*client).acid = acid
+}
+
 func (client *Client) WxappOauth(code string) (map[string]interface{}, error) {
 	return post((*client).server_addr, map[string]string{
-		"accountId" : "0",
+		"accountId" : (*client).acid,
 		"method" : "WxappOauth",
 		"jsCode" : code,
 	})
