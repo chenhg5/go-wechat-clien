@@ -39,13 +39,13 @@ func (client *Client) WxappOauth(code string) (map[string]interface{}, error) {
 	}))
 }
 
-func (client *Client) DecodeWxappData(code string) (map[string]interface{}, error) {
+func (client *Client) DecodeWxappData(sessionKey string, iv string, encryptedData string) (map[string]interface{}, error) {
 	data, err := post((*client).server_addr, map[string]string{
 		"accountId" : (*client).acid,
 		"method" : "DecodeWxappData",
-		"sessionKey" : "",
-		"iv" : "",
-		"encryptedData" : "",
+		"sessionKey" : sessionKey,
+		"iv" : iv,
+		"encryptedData" : encryptedData,
 	})
 
 	if data["code"].(float64) != 200 {
