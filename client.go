@@ -11,7 +11,9 @@ type Client struct {
 	acid        string
 }
 
-var client *Client
+var client = &Client{
+	"", "",
+}
 
 func InitClient(addr string)  {
 	(*client).server_addr = addr
