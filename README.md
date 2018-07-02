@@ -5,7 +5,7 @@ go-wechat go client
 ## install
 
 ```shell
-go get 
+go get github.com/chenhg5/go-wechat-client
 ```
 
 ## usage
