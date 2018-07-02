@@ -2,6 +2,7 @@ package client
 
 import (
 	"github.com/json-iterator/go"
+	"errors"
 )
 
 var json = jsoniter.ConfigCompatibleWithStandardLibrary
@@ -30,9 +31,29 @@ func (client *Client) SetAcid(acid string) *Client {
 }
 
 func (client *Client) WxappOauth(code string) (map[string]interface{}, error) {
-	return post((*client).server_addr, map[string]string{
+	return GetData(post((*client).server_addr, map[string]string{
 		"accountId" : (*client).acid,
 		"method" : "WxappOauth",
 		"jsCode" : code,
-	})
+	}))
+}
+
+func GetData(olddata map[string]interface{}, err error) (map[string]interface{}, error) {
+	if err != nil {
+		return map[string]interface{}{}, err
+	}
+
+	if olddata["code"].(float64) != 200 {
+		return map[string]interface{}{}, errors.New(olddata["msg"].(string))
+	}
+
+	wechatRes := olddata["data"].(map[string]interface{})
+
+	errcode, ok := wechatRes["errcode"]
+
+	if ok && errcode.(float64) != 0 {
+		return map[string]interface{}{}, errors.New(wechatRes["errmsg"].(string))
+	}
+
+	return olddata["data"].(map[string]interface{}), nil
 }
